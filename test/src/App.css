@@ -1,5 +1,13 @@
 .App {
   text-align: center;
+  position: absolute;
+width: 583px;
+height: auto;
+left: 300px;
+top: 109px;
+color:aliceblue;
+background: #1D1825;
+border-radius: 20px;
 }
 
 .task-input {
