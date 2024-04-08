@@ -5,22 +5,22 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [taskName, setTaskName] = useState('');
 
-  useEffect(() => {
+  useEffect(() =>{
     fetchTasks();
   }, []);
 
   const fetchTasks = () => {
     fetch('http://localhost:3001/tasks')
-      .then(response => response.json())
-      .then(data => setTasks(data));
+      .then(response =>response.json())
+      .then(data =>setTasks(data));
   };
 
   const addTask = () => {
     if (taskName.trim() !== '') {
       fetch('http://localhost:3001/tasks', {
-        method: 'POST',
+        method:'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type':'application/json',
         },
         body: JSON.stringify({ name: taskName, done: false }),
       })
@@ -33,8 +33,8 @@ function App() {
   };
 
   const toggleTask = (id) => {
-    const updatedTasks = [...tasks];
-    const index = updatedTasks.findIndex(task => task.id === id);
+    const updatedTasks= [...tasks];
+    const index =updatedTasks.findIndex(task => task.id === id);
     if (index !== -1) {
       updatedTasks[index].done = !updatedTasks[index].done;
       fetch(`http://localhost:3001/tasks/${id}`, {
@@ -44,16 +44,16 @@ function App() {
         },
         body: JSON.stringify(updatedTasks[index]),
       })
-        .then(() => setTasks(updatedTasks));
+        .then(()=>setTasks(updatedTasks));
     }
   };
 
-  const deleteTask = (id) => {
+  const deleteTask =(id) => {
     fetch(`http://localhost:3001/tasks/${id}`, {
       method: 'DELETE',
     })
       .then(() => {
-        const updatedTasks = tasks.filter(task => task.id !== id);
+        const updatedTasks= tasks.filter(task => task.id !== id);
         setTasks(updatedTasks);
       });
   };
@@ -66,20 +66,20 @@ function App() {
           type="text"
           placeholder="Enter task..."
           value={taskName}
-          onChange={(e) => setTaskName(e.target.value)}
+          onChange={(e)=>setTaskName(e.target.value)}
         />
         <button onClick={addTask}>Add Task</button>
       </div>
       <ul className="task-list">
-        {tasks.map((task) => (
-          <li key={task.id} className={task.done ? 'done' : ''}>
+        {tasks.map((task)=>(
+          <li key={task.id} className={task.done ?'done' : ''}>
             <input
               type="checkbox"
               checked={task.done}
-              onChange={() => toggleTask(task.id)}
+              onChange={()=> toggleTask(task.id)}
             />
             <span>{task.name}</span>
-            <button onClick={() => deleteTask(task.id)}>Delete</button>
+            <button onClick={() =>deleteTask(task.id)}>Delete</button>
           </li>
         ))}
       </ul>
